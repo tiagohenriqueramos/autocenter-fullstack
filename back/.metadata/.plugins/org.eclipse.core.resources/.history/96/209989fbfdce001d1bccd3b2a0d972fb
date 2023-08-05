@@ -1,0 +1,63 @@
+package br.com.tiagohenriqueramos.autocenter.controller;
+
+import java.io.Serializable;
+import java.net.URI;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import br.com.tiagohenriqueramos.autocenterfullstack.entities.Funcionario;
+import br.com.tiagohenriqueramos.autocenterfullstack.service.FuncionarioService;
+@CrossOrigin(origins = "*")
+@RestController
+@RequestMapping(value = "/funcionarios")
+public class FuncionarioController implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@Autowired
+	FuncionarioService funcionarioService;
+
+	@GetMapping
+	public ResponseEntity<List<Funcionario>> listarTodos() {
+		List<Funcionario> lista = funcionarioService.listarFuncionarios();
+		return ResponseEntity.ok().body(lista);
+	}
+
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<Funcionario> encontrarPorId(@PathVariable Long id) {
+		Funcionario funcionario = funcionarioService.buscarPorId(id);
+		return ResponseEntity.ok().body(funcionario);
+
+	}
+	@PostMapping
+	public ResponseEntity<Funcionario> cadastrar(@RequestBody Funcionario funcionario) {
+		funcionario = funcionarioService.cadastrarFuncionario(funcionario);
+		URI uri = ServletUriComponentsBuilder.fromPath("/{id}").buildAndExpand(funcionario.getId()).toUri();
+		return ResponseEntity.created(uri).body(funcionario);
+	}
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Void> deletar(@PathVariable Long id){
+		funcionarioService.deletarFuncionario(id);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<Funcionario> editar(@PathVariable Long id, @RequestBody Funcionario funcionario){
+		funcionario = funcionarioService.editarFuncionario(id, funcionario);
+		return ResponseEntity.ok().body(funcionario);		
+	}
+	
+	
+}

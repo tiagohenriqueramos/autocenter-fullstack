@@ -1,0 +1,132 @@
+package br.com.tiagohenriqueramos.autocenterfullstack.entities;
+
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
+@Setter
+@Getter
+@NoArgsConstructor
+@RequiredArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "tb_servico")
+
+public class Servico implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@NonNull
+	private String descricaoServico;
+
+	@NonNull
+	private Double maoDeObra;
+
+	@NonNull
+	@Lob
+	private Produto produto;
+
+	@JsonIgnore
+	@ManyToMany(cascade = CascadeType.MERGE)
+	@JoinTable(name = "tb_servico_produto", joinColumns = {
+			@JoinColumn(name = "servico_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "produto_id", referencedColumnName = "id") })
+	private Set<Produto> produtos = new HashSet<>();
+
+	@JsonIgnore
+	@ManyToMany(mappedBy = "servicos", cascade = CascadeType.MERGE)
+	private Set<Agendamento> agendamentos = new HashSet<>();
+
+	public Servico() {
+	}
+
+	public Servico(String descricaoServico, Double maoDeObra, Produto produto) {
+		super();
+
+		this.descricaoServico = descricaoServico;
+		this.maoDeObra = maoDeObra;
+		this.produto = produto;
+
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getDescricaoServico() {
+		return descricaoServico;
+	}
+
+	public void setDescricaoServico(String descricaoServico) {
+		this.descricaoServico = descricaoServico;
+	}
+
+	public Double getMaoDeObra() {
+		return maoDeObra;
+	}
+
+	public void setMaoDeObra(Double maoDeObra) {
+		this.maoDeObra = maoDeObra;
+	}
+
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
+	}
+
+	public Set<Produto> getProdutos() {
+		return produtos;
+	}
+
+	public Set<Agendamento> getAgendamentos() {
+		return agendamentos;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Servico other = (Servico) obj;
+		return Objects.equals(id, other.id);
+	}
+
+}

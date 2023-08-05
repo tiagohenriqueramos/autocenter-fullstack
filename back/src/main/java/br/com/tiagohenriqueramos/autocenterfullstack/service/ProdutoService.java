@@ -1,0 +1,21 @@
+package br.com.tiagohenriqueramos.autocenterfullstack.service;
+
+import java.util.List;
+
+import br.com.tiagohenriqueramos.autocenterfullstack.entities.Produto;
+
+public interface ProdutoService {
+
+	List<Produto> listarProdutos();
+
+	Produto buscarPorId(Long id);
+
+	Produto cadastrarProduto(Produto produto);
+
+	void deletarProduto(Long id);
+
+	Produto editarProduto(Long id, Produto produto);
+
+
+
+}

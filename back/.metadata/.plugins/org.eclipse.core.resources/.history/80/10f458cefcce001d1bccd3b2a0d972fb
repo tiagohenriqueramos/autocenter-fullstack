@@ -1,0 +1,21 @@
+package br.com.tiagohenriqueramos.autocenterfullstack.service;
+
+import java.util.List;
+
+import br.com.tiagohenriqueramos.autocenterfullstack.entities.Funcionario;
+
+public interface FuncionarioService {
+
+	List<Funcionario> listarFuncionarios();
+
+	Funcionario buscarPorId(Long id);
+
+	Funcionario cadastrarFuncionario(Funcionario funcionario);
+
+	void deletarFuncionario(Long id);
+
+	Funcionario editarFuncionario(Long id, Funcionario funcionario);
+
+
+
+}

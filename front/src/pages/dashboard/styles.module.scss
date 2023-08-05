@@ -1,0 +1,92 @@
+
+.container{
+    max-width: 720px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.container h1{
+    color: var(--black);
+}
+
+.containerHeader{
+    display: flex;
+    flex-direction: row;
+
+    button{
+        background: transparent;
+        border: 0;
+        margin-left: 25rem;
+
+    }
+    &.filtros {
+        margin-top: 2rem;
+        flex-direction: column;
+    
+        label {
+          margin-bottom: 1rem;
+          display: flex;
+          align-items: center;
+          font-size: 1.2rem;
+          color: var(--black);
+          display: block;
+
+    
+          input[type="checkbox"] {
+            margin-right: 0.5rem;
+          }
+        }
+        .filtroItem {
+            margin-bottom: 1rem;
+          }
+          .filtroContainer {
+            display: flex;
+            flex-direction: column;
+            margin-left: 1rem;
+          }
+          
+       
+      }
+    }
+
+
+.listAgendamentos{
+    display: flex;
+    flex-direction: column;
+    margin: 10rem 2;
+    margin-top: 1rem;
+
+}
+
+.agendamento{
+    display: flex;
+    flex-direction: row;
+    background-color: var(--white);
+    margin-bottom: 3rem;
+    align-items: center;
+    border-radius: 0.3rem;    
+    border: 1px solid var(--gray-100);
+  
+
+    button{
+        border: 0;
+        background: transparent;
+        font-size: 1.2rem;
+        color: var(--black);
+        height: 40px;
+        align-items: center;
+        display: flex;
+    }
+}
+
+.tag{
+    width: 9px;
+    background-color: var(--red-900);
+    height: 40px;
+    border-radius: 0.3rem 0 0 0.3rem;
+    margin-right: 1rem;
+
+}

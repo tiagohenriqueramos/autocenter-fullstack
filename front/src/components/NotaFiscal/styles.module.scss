@@ -1,0 +1,75 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Estilos do conteúdo da nota fiscal */
+  .nota-fiscal-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .nota-fiscal-header {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .nota-fiscal-details {
+    padding: 20px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilos para informações específicas da nota fiscal */
+  .nota-fiscal-cnpj {
+    font-weight: bold;
+    font-size: 18px;
+  }
+  
+  .nota-fiscal-nome {
+    font-size: 16px;
+  }
+  
+  .nota-fiscal-descricao-produto {
+    font-weight: bold;
+    font-size: 18px;
+  }
+  
+  .nota-fiscal-valor-produto {
+    font-size: 16px;
+    color: #006400; /* Cor verde para o valor do produto */
+  }
+  
+  .nota-fiscal-valor-total {
+    font-weight: bold;
+    font-size: 20px;
+    color: #ff0000; /* Cor vermelha para o valor total */
+  }
+  
+  /* Estilos para o botão de voltar */
+  .nota-fiscal-back-button {
+    display: block;
+    margin-top: 20px;
+    background-color: #0066cc;
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .nota-fiscal-back-button:hover {
+    background-color: #0052a3;
+  }
+  
+  .nota-fiscal-back-button:focus {
+    outline: none;
+  }
+  
+  
+  

@@ -1,0 +1,75 @@
+package br.com.tiagohenriqueramos.autocenterfullstack.service;
+
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Optional;
+
+import javax.persistence.EntityNotFoundException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import br.com.tiagohenriqueramos.autocenterfullstack.entities.Produto;
+import br.com.tiagohenriqueramos.autocenterfullstack.repositories.ProdutoRepository;
+import br.com.tiagohenriqueramos.autocenterfullstack.service.exceptions.ResourceNotFoundException;
+
+@Service
+public class ProdutoServiceImpl implements ProdutoService {
+
+	DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+	@Autowired
+	private ProdutoRepository produtoRepository;
+
+	public List<Produto> findAll() {
+		return produtoRepository.findAll();
+	}
+
+	@Override
+	public List<Produto> listarProdutos() {
+		List<Produto> listaProdutos = produtoRepository
+				.findAll((Sort.by(Sort.Direction.ASC, "nome")));
+		return listaProdutos;
+	}
+
+	@Override
+	public Produto buscarPorId(Long id) {
+		Optional<Produto> produto = produtoRepository.findById(id);
+		return produto.orElseThrow(() -> new ResourceNotFoundException("Sem produto com essa Id informada!"));
+	}
+
+	@Override
+	public Produto cadastrarProduto(Produto produto) {
+		return produtoRepository.save(produto);
+	}
+
+	@Override
+	public void deletarProduto(Long id) {
+
+		try {
+			produtoRepository.deleteById(id);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Produto não encotrado!");
+		}
+	}
+
+	@Override
+	public Produto editarProduto(Long id, Produto novoProduto) {
+
+		try {
+			Produto produto = produtoRepository.getReferenceById(id);
+			atualizarDados(novoProduto, produto);
+			return produtoRepository.save(produto);
+		} catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Produto não encontrado!");
+		}
+	}
+
+	public void atualizarDados(Produto novoProduto, Produto produto) {
+		produto.setNome(novoProduto.getNome());
+		produto.setDescricaoProduto(novoProduto.getDescricaoProduto());
+		produto.setPreco(novoProduto.getPreco());
+	}
+
+}

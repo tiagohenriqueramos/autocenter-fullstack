@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename Java project &apos;Auto-Center-FullStack&apos; to &apos;Auto-Center-BackEnd&apos;&#x0D;&#x0A;- Original element: &apos;Auto-Center-FullStack&apos;&#x0D;&#x0A;- Renamed element: &apos;Auto-Center-FullStack&apos;&#x0D;&#x0A;- Update references to refactored element" description="Rename Java project &apos;Auto-Center-FullStack&apos;" flags="7" id="org.eclipse.jdt.ui.rename.java.project" input="=Auto-Center-FullStack" name="Auto-Center-BackEnd" references="true" stamp="1680179018766" version="1.0"/>
+</session>

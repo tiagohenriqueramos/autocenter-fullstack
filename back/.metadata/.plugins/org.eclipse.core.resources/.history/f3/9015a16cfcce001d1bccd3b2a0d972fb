@@ -1,0 +1,21 @@
+package br.com.tiagohenriqueramos.autocenterfullstack.service;
+
+import java.util.List;
+
+import br.com.tiagohenriqueramos.autocenterfullstack.entities.Agendamento;
+
+public interface AgendamentoService {
+
+	List<Agendamento> listarAgendamentos();
+
+	Agendamento buscarPorId(Long id);
+
+	Agendamento cadastrarAgendamento(Agendamento agendamento);
+
+	void deletarAgendamento(Long id);
+
+	Agendamento editarAgendamento(Long id, Agendamento agendamento);
+
+	
+
+}

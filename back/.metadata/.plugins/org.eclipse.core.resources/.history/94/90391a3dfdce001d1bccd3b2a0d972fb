@@ -1,0 +1,120 @@
+package br.com.tiagohenriqueramos.autocenterfullstack.entities;
+
+import java.io.Serializable;
+import java.util.Objects;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
+@Setter
+@Getter
+@NoArgsConstructor
+@RequiredArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "tb_veiculo")
+public class Veiculo implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
+	@NonNull
+	private String marca;
+
+	@NonNull
+	private String modelo;
+
+	@NonNull
+	private String ano;
+
+	@JoinColumn(name = "cliente_id")
+	@ManyToOne(cascade = CascadeType.MERGE)
+	private Cliente cliente;
+
+	public Veiculo() {
+	}
+
+	public Veiculo( String marca, String modelo, String ano, Cliente cliente) {
+		super();
+		
+		this.marca = marca;
+		this.modelo = modelo;
+		this.ano = ano;
+		this.cliente = cliente;
+	}
+	
+	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getMarca() {
+		return marca;
+	}
+
+	public void setMarca(String marca) {
+		this.marca = marca;
+	}
+
+	public String getModelo() {
+		return modelo;
+	}
+
+	public void setModelo(String modelo) {
+		this.modelo = modelo;
+	}
+
+	public String getAno() {
+		return ano;
+	}
+
+	public void setAno(String ano) {
+		this.ano = ano;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Veiculo other = (Veiculo) obj;
+		return Objects.equals(id, other.id);
+	}
+
+}
