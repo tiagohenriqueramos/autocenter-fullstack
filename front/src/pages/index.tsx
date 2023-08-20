@@ -46,7 +46,8 @@ export default function Home() {
     <div className={styles.containerCenter}>
       <Image src={logoImg} alt="Logo Auto Center"/>
       <div className={styles.login}>
-      <h1>Faça seu login</h1>
+      <h1>Auto Center</h1>
+
 
       <form onSubmit={handleLogin}>
         <Input

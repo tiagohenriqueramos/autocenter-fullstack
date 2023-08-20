@@ -14,10 +14,12 @@ import { StatusAgendamentos } from "@/enum/StatusAgendamentos";
 export type Agendamento = {
   id: string;
   data: string;
-  horario: string;
+  hora: string;
   status: StatusAgendamentos; 
   cliente: Cliente;
   servico: Servico;
+  veiculo: Veiculo;
+
 };
 
 export type Cliente = {
@@ -33,7 +35,8 @@ export type Veiculo = {
   marca: string;
   modelo: string;
   ano: string;
-  cliente_Id: string;
+  placa:string;
+  cliente_id: string;
 };
 
 export type Servico = {
@@ -106,7 +109,7 @@ export default function Finalizados() {
 
     const fetchAgendamento = async () => {
       const response = await apiClient
-        .get("/agendamentos/listar/concluido")
+        .get("/agendamentos/concluidos")
         .catch((err) => console.log(err));
       if (response) {
         const agendamento: Agendamento[] = response.data;
@@ -169,7 +172,7 @@ export default function Finalizados() {
       <div>
         <Header />
         <main className={styles.container}>
-          <h1>Agendamentos</h1>
+          <h1>Agendamentos Concluidos</h1>
           <div className={`${styles.containerHeader} ${styles.filtros}`}>
             <label>
               <input
@@ -255,14 +258,15 @@ export default function Finalizados() {
         </main>
         {modalAberto && (
           <FinalizadorModal
-            modalAberto={modalAberto}
-            modalFechado={fecharModal}
-            agendamento={agendamentoList}
-            cliente={cliente}
-            veiculo={veiculo}
-            servico={servico}
-            produto={produto}
-            agendamentoId={agendamentoSelecionadoId}
+          modalAberto={modalAberto}
+          modalFechado={fecharModal}
+          agendamento={agendamentoList}
+          cliente={cliente}
+          veiculo={veiculo}
+          servico={servico}
+          produto={produto}
+          agendamentoId={agendamentoSelecionadoId}
+         
             />
             )}
           

@@ -1,0 +1,56 @@
+
+.cadastro{
+  margin-top: 0,1rem;
+  width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0.3rem 1.5rem;
+
+ 
+
+  select {
+    width: 120px;
+    height: 40px;
+    border-radius: 0.3rem;
+    margin-bottom: 1rem;
+    color: var(--black);
+    background-color: var(--white);
+    border: 1px solid var(--gray-100);
+    padding: 0 0.5rem;
+  }
+
+}
+
+.text{
+  margin-top: 1rem;
+  color: var(--black);
+  cursor: pointer;
+}
+
+@media(max-width: 620px){
+  .login{
+    width: 90%;
+  }
+}
+
+.date {
+  margin-bottom: 1rem;
+  height: 40px;
+  border: 0;
+  border-radius: 0.5rem;
+  background-color: var(--white);
+  color: var(--black);
+  padding: 1rem;
+  border: 1px solid var(--gray-100);
+  width: 175px;
+
+  &.dateClicked {
+    width: 115px;
+  }
+}
+
+.date::placeholder{
+  color: rgba(23, 22, 22, 0.8);
+}

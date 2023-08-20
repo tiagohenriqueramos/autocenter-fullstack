@@ -1,8 +1,6 @@
 import { useState, FormEvent, useEffect } from "react";
 import Head from "next/head";
-import Router from "next/router";
 import { Header } from "@/components/Header";
-import { Input } from "@/components/ui/Input";
 import styles from "./styles.module.scss";
 import { Button } from "@/components/ui/Button";
 import { setupAPIClient } from "@/services/api";
@@ -11,9 +9,8 @@ import { canSSRAuth } from "@/utils/canSSRAuth";
 import Datepicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
-import DateTimePicker from "react-datetime-picker";
 
-type Cliente = {
+export type Cliente = {
   id: string;
   nome: string;
   cpf: string;
@@ -21,21 +18,32 @@ type Cliente = {
   telefone: string;
 };
 
-type Servico = {
+export type Servico = {
   id: string;
   descricaoServico: string;
   maoDeObra: string;
+  
 };
-
-type Agendamento = {
+export type Veiculo = {
+  id: string;
+  marca: string;
+  modelo: string;
+  ano: string;
+  placa: string;
+  cliente: Cliente;
+};
+export type Agendamento = {
   id: string;
   data: string;
-  horario: string;
+  hora: string;
 };
 
 export default function Agendamentos() {
   const [cliente, setCliente] = useState<Cliente[]>([]);
   const [clienteSelecionado, setClienteSelecionado] = useState("");
+
+  const [veiculo, setVeiculo] = useState<Veiculo[]>([]);
+  const [veiculoSelecionado, setVeiculoSelecionado] = useState("");
 
   const [servico, setServico] = useState<Servico[]>([]);
   const [servicoSelecionado, setServicoSelecionado] = useState("");
@@ -47,6 +55,7 @@ export default function Agendamentos() {
   const [dataExistente, setDataExistente] = useState<string[]>([]);
   const [horaExistente, setHoraExistente] = useState<string[]>([]);
   const [horaList, setHoraList] = useState<string[]>([]);
+
 
   const [dataClick, setDataClick] = useState(false);
 
@@ -65,6 +74,21 @@ export default function Agendamentos() {
 
   useEffect(() => {
     fetchCliente();
+  }, []);
+
+  const fetchVeiculos = async () => {
+    const response = await apiClient
+      .get("/veiculos")
+      .catch((err) => console.log(err));
+
+    if (response) {
+      const veiculos: Veiculo[] = response.data;
+      setVeiculo(veiculos);
+    }
+  };
+
+  useEffect(() => {
+    fetchVeiculos();
   }, []);
 
   const fetchServico = async () => {
@@ -90,7 +114,7 @@ export default function Agendamentos() {
       const agendamento: Agendamento[] = response.data;
       setAgendamento(agendamento);
 
-      const horasExistente = agendamento.map((item) => item.horario);
+      const horasExistente = agendamento.map((item) => item.hora);
       setHoraExistente(horasExistente);
 
       const datasExistente = agendamento.map((item) => item.data);
@@ -105,6 +129,11 @@ export default function Agendamentos() {
   async function handleChangeServico(event) {
     setServicoSelecionado(event.target.value);
     console.log(servico[event.target.value]);
+  }
+  async function handleChangeVeiculo(event) {
+    setVeiculoSelecionado(event.target.value);
+
+    console.log(veiculo[event.target.value]);
   }
 
   async function handleChangeCliente(event: any) {
@@ -133,27 +162,27 @@ export default function Agendamentos() {
   const increment = 1; // Defina o incremento em horas desejado
 
   const hourList = generateHourList(startTime, endTime, increment);
-// ...
+  // ...
 
-let hourListFiltered = hourList;
+  let hourListFiltered = hourList;
 
-if (dataSelecionada) {
-  const formattedDataSelecionada = format(dataSelecionada, "dd/MM/yyyy");
-  
-  // Verifica se há algum horário marcado na data selecionada
-  if (dataExistente.includes(formattedDataSelecionada)) {
-    const horariosMarcados = agendamento
-      .filter((agend) => agend.data === formattedDataSelecionada)
-      .map((agend) => agend.horario);
+  if (dataSelecionada) {
+    const formattedDataSelecionada = format(dataSelecionada, "dd/MM/yyyy");
 
-    // Filtra a lista de horários disponíveis para excluir os horários marcados
-    hourListFiltered = hourList.filter((hour) => !horariosMarcados.includes(hour));
+    // Verifica se há algum horário marcado na data selecionada
+    if (dataExistente.includes(formattedDataSelecionada)) {
+      const horariosMarcados = agendamento
+        .filter((agend) => agend.data === formattedDataSelecionada)
+        .map((agend) => agend.hora);
+
+      // Filtra a lista de horários disponíveis para excluir os horários marcados
+      hourListFiltered = hourList.filter(
+        (hour) => !horariosMarcados.includes(hour)
+      );
+    }
   }
-}
 
-// ...
-  
-  
+  // ...
 
   async function handleRegister(event: FormEvent) {
     event.preventDefault();
@@ -167,15 +196,16 @@ if (dataSelecionada) {
       const dataFormatada = format(dataSelecionada, "dd/MM/yyyy");
 
       const data = {
+        cliente_id: cliente[clienteSelecionado].id,
+        veiculo_id: veiculo[veiculoSelecionado].id,
+        servico_id: servico[servicoSelecionado].id,
         data: dataFormatada,
-        horario: horaSelecionada,
-        servicoId: servico[servicoSelecionado].id,
-        cliente_Id: cliente[clienteSelecionado].id,
+        hora: horaSelecionada,
       };
       console.log("Dados que serão enviados:", data);
 
       console.log("Data selecionada:", data.data);
-      console.log("Hora selecionada:", data.horario);
+      console.log("Hora selecionada:", data.hora);
 
       await apiClient.post("/agendamentos", data);
       toast.success("Cadastrado com sucesso!");
@@ -188,9 +218,10 @@ if (dataSelecionada) {
 
       setServicoSelecionado("");
       setClienteSelecionado("");
+      setVeiculoSelecionado("");
       setHoraSelecionada("");
       setDataSelecionada("");
-      setDataClick(false)
+      setDataClick(false);
     } catch (err) {
       console.log(err);
       toast.error("Ops, erro ao cadastrar!");
@@ -221,6 +252,19 @@ if (dataSelecionada) {
                 })}
               </select>
 
+              <select value={veiculoSelecionado} onChange={handleChangeVeiculo}>
+                <option value="" disabled defaultValue="">
+                  Selecione um Veiculo
+                </option>
+                {veiculo.map((item, index) => {
+                  return (
+                    <option key={item.id} value={index}>
+                      Carro: {item.modelo}. Placa: {item.placa}. Proprietario:{" "}
+                      {item.cliente ? item.cliente.nome : "Nenhum proprietário"}
+                    </option>
+                  );
+                })}
+              </select>
               <select value={servicoSelecionado} onChange={handleChangeServico}>
                 <option value="" disabled defaultValue="">
                   Selecione um serviço
@@ -233,6 +277,7 @@ if (dataSelecionada) {
                   );
                 })}
               </select>
+
               <Datepicker
                 className={`${styles.date} ${
                   dataClick ? styles.dateClicked : ""
@@ -241,33 +286,32 @@ if (dataSelecionada) {
                 selected={dataSelecionada}
                 onChange={(date) => {
                   setDataSelecionada(date);
-                  setDataClick(true); 
+                  setDataClick(true);
                 }}
                 dateFormat="dd/MM/yyyy"
                 filterDate={(date) =>
                   date.getDay() !== 6 && date.getDay() !== 0
                 }
               />
- {dataSelecionada && (
-            <select
-              value={horaSelecionada}
-              onChange={(event) => setHoraSelecionada(event.target.value)}
-            >
-              <option value="" disabled defaultValue="">
-                Selecione um horário
-              </option>
-              {hourListFiltered.length === 0 ? (
-                <option disabled>Nenhum horário disponível</option>
-              ) : (
-                hourListFiltered.map((hour) => (
-                  <option key={hour} value={hour}>
-                    {hour}
+              {dataSelecionada && (
+                <select
+                  value={horaSelecionada}
+                  onChange={(event) => setHoraSelecionada(event.target.value)}
+                >
+                  <option value="" disabled defaultValue="">
+                    Selecione um horário
                   </option>
-                ))
+                  {hourListFiltered.length === 0 ? (
+                    <option disabled>Nenhum horário disponível</option>
+                  ) : (
+                    hourListFiltered.map((hour) => (
+                      <option key={hour} value={hour}>
+                        {hour}
+                      </option>
+                    ))
+                  )}
+                </select>
               )}
-            </select>
-          )}
-
 
               <Button type="submit">Cadastrar</Button>
             </form>

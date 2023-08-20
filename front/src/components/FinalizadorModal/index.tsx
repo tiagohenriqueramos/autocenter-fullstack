@@ -1,7 +1,7 @@
 import Modal from "react-modal";
 import styles from "./styles.module.scss";
-import NotaFiscal from "../NotaFiscal";
 import { FiX } from "react-icons/fi";
+import { setupAPIClient } from "@/services/api";
 
 import {
   Agendamento,
@@ -10,6 +10,7 @@ import {
   Servico,
   Veiculo,
 } from "../../pages/dashboard";
+import { Button } from "../ui/Button";
 
 type ModalProps = {
   modalAberto: boolean;
@@ -30,7 +31,6 @@ export function FinalizadorModal({
   servico,
   veiculo,
   agendamentoId,
-  
 }: ModalProps) {
   const customStyles = {
     content: {
@@ -46,7 +46,37 @@ export function FinalizadorModal({
   const agendamentoSelecionado = agendamento.find(
     (ag) => ag.id === agendamentoId
   );
+  const apiClient = setupAPIClient();
 
+  const gerarPdf = async () => {
+    try {
+      if (!agendamentoId) {
+        console.error("Agendamento ID is missing.");
+        return;
+      }
+      
+      const response = await apiClient.get(`/pdf/${agendamentoId}`, {
+        responseType: "blob", // Indica que a resposta é um arquivo binário (PDF)
+      });
+  
+      // Cria um URL temporário para o blob recebido
+      const pdfBlob = new Blob([response.data], { type: "application/pdf" });
+      const pdfUrl = URL.createObjectURL(pdfBlob);
+  
+      // Cria um link temporário e o simula o clique para iniciar o download
+      const downloadLink = document.createElement("a");
+      downloadLink.href = pdfUrl;
+      downloadLink.download = agendamentoSelecionado.cliente.nome;
+      downloadLink.click();
+  
+      // Limpa o URL temporário
+      URL.revokeObjectURL(pdfUrl);
+    } catch (error) {
+      console.error("Error generating or downloading PDF:", error);
+    }
+  };
+  
+  
   return (
     <Modal
       isOpen={modalAberto}
@@ -67,7 +97,7 @@ export function FinalizadorModal({
             key={agendamentoSelecionado.id}
             className={styles.containerItem}
           >
-            <h2>Dados do Agendamento</h2>
+            <h2>Agendamento Concluido</h2>
             <br />
 
             <h2>Agendamento:</h2>
@@ -76,7 +106,7 @@ export function FinalizadorModal({
               {agendamentoSelecionado.data}
               <br />
               <strong>Horario: </strong>
-              {agendamentoSelecionado.horario}
+              {agendamentoSelecionado.hora}
               <br />
               <br />
             </span>
@@ -94,6 +124,23 @@ export function FinalizadorModal({
               <br />
               <strong>Telefone: </strong>
               {agendamentoSelecionado.cliente.telefone}
+              <br />
+              <br />
+            </span>
+
+            <h2>Veiculo: </h2>
+            <span className={styles.description}>
+              <strong>Marca: </strong>
+              {agendamentoSelecionado.veiculo.marca}
+              <br />
+              <strong>Modelo: </strong>
+              {agendamentoSelecionado.veiculo.modelo}
+              <br />
+              <strong>Placa: </strong>
+              {agendamentoSelecionado.veiculo.placa}
+              <br />
+              <strong>Ano: </strong>
+              {agendamentoSelecionado.veiculo.ano}
               <br />
               <br />
             </span>
@@ -122,10 +169,9 @@ export function FinalizadorModal({
               {agendamentoSelecionado.servico.produto.preco}
             </span>
           </section>
-         
         </div>
       )}
-      <NotaFiscal   notaFiscalId={agendamentoId}/>
+      <Button type="button" onClick={gerarPdf}>Gerar PDF</Button>
     </Modal>
   );
 }

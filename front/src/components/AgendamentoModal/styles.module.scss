@@ -1,36 +1,138 @@
-  .containerItem{
+/* Estilos para o container de cada item */
+.containerItem {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0;
+
+  strong {
+    color: var(--dark-700); /* Cor do texto forte */
+  }
+}
+
+/* Estilos para a descrição */
+.description {
+  margin-top: 0.5rem;
+  word-break: break-all; /* Quebra de palavras */
+}
+
+/* Estilos para os botões */
+.buttonOrder {
+  margin-top: 1.5rem;
+  background-color: var(--red-900); /* Cor de fundo vermelho */
+  border: 0;
+  padding: 0.5rem 1rem;
+  border-radius: 0.2rem;
+  color: rgb(255, 255, 255); /* Cor do texto branco */
+}
+
+.buttonOrderSalvar {
+  margin-top: 1.5rem;
+  background-color: var(--red-900); /* Cor de fundo vermelho */
+  border: 0;
+  padding: 0.5rem 1rem;
+  border-radius: 0.2rem;
+  color: rgb(255, 255, 255); /* Cor do texto branco */
+}
+
+.buttonOrderEditar {
+  margin-top: 1.5rem;
+  margin-right: 1rem;
+  background-color: var(--yello-600); /* Cor de fundo amarelo */
+  border: 0;
+  padding: 0.5rem 1rem;
+  border-radius: 0.2rem;
+  color: rgb(255, 255, 255); /* Cor do texto branco */
+}
+
+.buttonOrderDelete {
+  margin-top: 1.5rem;
+  margin-right: 1rem;
+  background-color: var(--blue-300); /* Cor de fundo azul */
+  border: 0;
+  padding: 0.5rem 1rem;
+  border-radius: 0.2rem;
+  color: rgb(255, 255, 255); /* Cor do texto branco */
+}
+
+/* Estilos responsivos */
+@media screen and (max-width: 700px) {
+  .container {
+    width: 430px; /* Largura do container em telas pequenas */
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .container {
+    width: 330px; /* Largura do container em telas ainda menores */
+  }
+}
+
+/* Estilos para a seção de cadastro */
+.cadastro {
+  margin-top: 0rem;
+  width: 1500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0.1rem 0.2rem;
+
+  h1 {
+    padding: 1rem;
+  }
+
+  form {
+    width: 90%;
     display: flex;
     flex-direction: column;
-    margin: 1rem 0;
-  
-    strong{
-      color: var(--dark-700)
-    }
   }
-  
-  .description{
-    margin-top: 0.5rem;
-    word-break: break-all;
+
+  form button {
+    height: 40px;
+    font-size: 1.2rem;
   }
-  
-  .buttonOrder{
-    margin-top: 1.5rem;
-    background-color: var(--red-900);
-    border:0;
-    padding: 0.5rem 1rem;
-    border-radius: 0.2rem;
-    color:  rgb(255, 255, 255);  
+
+  select {
+    width: 120px;
+    height: 40px;
+    border-radius: 0.3rem;
+    margin-bottom: 1rem;
+    color: var(--black);
+    background-color: var(--white);
+    border: 1px solid var(--gray-100);
+    padding: 0 0.5rem;
   }
-  
-  
-  @media screen and (max-width: 700px) {
-      .container{
-        width: 430px;
-      }
+}
+
+.text {
+  margin-top: 1rem;
+  color: var(--black);
+  cursor: pointer;
+}
+
+@media (max-width: 620px) {
+  .login {
+    width: 90%;
   }
-  
-  @media screen and (max-width: 550px) {
-      .container{
-        width: 330px;
-      }
+}
+
+/* Estilos para o componente Datepicker */
+.date {
+  margin-bottom: 1rem;
+  height: 40px;
+  border: 0;
+  border-radius: 0.5rem;
+  background-color: var(--white);
+  color: var(--black);
+  padding: 1rem;
+  border: 1px solid var(--gray-100);
+  width: 175px;
+
+  &.dateClicked {
+    width: 115px;
   }
+}
+
+.date::placeholder {
+  color: rgba(23, 22, 22, 0.8); /* Cor do texto de placeholder */
+}

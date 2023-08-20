@@ -56,3 +56,34 @@
     width: 90%;
   }
 }
+
+.clientes{
+  display: flex; /* Aplica flexbox para o agendamento */
+  width: 700px;
+  flex-direction: row; /* Itens dispostos em linha */
+  background-color: var(--white); /* Cor de fundo branca */
+  margin-bottom: 3rem; /* Margem inferior de 3rem */
+  align-items: center; /* Centraliza verticalmente */
+  border-radius: 0.3rem; /* Borda arredondada de 0.3rem */
+  border: 1px solid var(--gray-100); /* Borda sólida com cor específica */
+
+  /* Estilos para botões dentro do agendamento */
+  button{
+      border: 0; /* Sem borda */
+      background: transparent; /* Fundo transparente */
+      font-size: 1.2rem; /* Tamanho de fonte de 1.2rem */
+      color: var(--black); /* Cor do texto */
+      height: 40px; /* Altura de 40px */
+      align-items: center; /* Centraliza verticalmente */
+      display: flex; /* Aplica flexbox para o botão */
+  }
+}
+
+/* Estilos para a tag */
+.tag{
+  width: 9px; /* Largura de 9px */
+  background-color: var(--red-900); /* Cor de fundo vermelha */
+  height: 40px; /* Altura de 40px */
+  border-radius: 0.3rem 0 0 0.3rem; /* Borda arredondada específica */
+  margin-right: 1rem; /* Margem direita de 1rem */
+}

@@ -1,45 +1,152 @@
+/* Estilos para o container centralizado */
 .containerCenter{
-  min-height: 50vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  background-color: var(--gray-900);
-
+  min-height: 50vh; /* Altura mínima de 50% da altura da viewport */
+  display: flex; /* Aplica flexbox para o container */
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+  flex-direction: column; /* Itens dispostos em coluna */
+  background-color: var(--gray-900); /* Cor de fundo cinza escura */
 }
 
+/* Estilos para a seção de cadastro */
 .cadastro{
-  margin-top: 2rem;
-  width: 700px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding: 2rem 1.5rem;
-
+  margin-top: 2rem; /* Margem superior de 2rem */
+  width: 700px; /* Largura de 700px */
+  display: flex; /* Aplica flexbox para o container */
+  align-items: center; /* Centraliza verticalmente */
+  justify-content: center; /* Centraliza horizontalmente */
+  flex-direction: column; /* Itens dispostos em coluna */
+  padding: 2rem 1.5rem; /* Preenchimento interno */
+  /* Estilos para o cabeçalho h1 dentro desta seção */
   h1{
-    padding: 1rem;
+    padding: 1rem; /* Preenchimento interno do cabeçalho h1 */
   }
-
+  /* Estilos para o formulário dentro desta seção */
   form{
-    width: 90%;
-    display: flex;
-    flex-direction: column;
+    width: 90%; /* Largura do formulário de 90% */
+    display: flex; /* Aplica flexbox para o formulário */
+    flex-direction: column; /* Itens dispostos em coluna */
   }
-  form bottom{
-    height: 40px;
-    font-size: 1.2rem;
+  /* Estilos para botões dentro do formulário */
+  form button{
+    height: 40px; /* Altura de 40px para botões */
+    font-size: 1.2rem; /* Tamanho de fonte de 1.2rem */
   }
 }
 
+/* Estilos para elementos com classe "text" */
 .text{
-  margin-top: 1rem;
-  color: var(--black);
-  cursor: pointer;
+  margin-top: 1rem; /* Margem superior de 1rem */
+  color: var(--black); /* Cor do texto */
+  cursor: pointer; /* Cursor do mouse transformado em mão */
 }
 
+/* Estilos responsivos para elementos com classe "login" */
 @media(max-width: 620px){
   .login{
-    width: 90%;
+    width: 90%; /* Largura do elemento .login de 90% */
   }
+}
+
+/* Estilos para o container */
+.container{
+  max-width: 720px; /* Largura máxima de 720px */
+  margin: 4rem auto; /* Margem de 4rem nas laterais e auto no topo/baixo */
+  padding: 0 2rem; /* Preenchimento interno nas laterais */
+  display: flex; /* Aplica flexbox para o container */
+  flex-direction: column; /* Itens dispostos em coluna */
+}
+
+/* Estilos para cabeçalho dentro do container */
+.container h1{
+  color: var(--black); /* Cor do texto */
+}
+
+/* Estilos para o cabeçalho de containerHeader */
+.containerHeader{
+  display: flex; /* Aplica flexbox para o container */
+  flex-direction: row; /* Itens dispostos em linha */
+  
+  /* Estilos para botões dentro do cabeçalho */
+  button{
+      background: transparent; /* Fundo transparente */
+      border: 0; /* Sem borda */
+      margin-left: 25rem; /* Margem esquerda de 25rem */
+  }
+
+  /* Estilos específicos para a classe "filtros" dentro do cabeçalho */
+  &.filtros {
+      margin-top: 2rem; /* Margem superior de 2rem */
+      flex-direction: column; /* Itens dispostos em coluna */
+  
+      /* Estilos para etiquetas (labels) dentro dos filtros */
+      label {
+        margin-bottom: 1rem; /* Margem inferior de 1rem */
+        display: flex; /* Aplica flexbox para o label */
+        align-items: center; /* Centraliza verticalmente */
+        font-size: 1.2rem; /* Tamanho de fonte de 1.2rem */
+        color: var(--black); /* Cor do texto */
+        display: block; /* Define como bloco */
+  
+        /* Estilos para caixas de seleção dentro dos filtros */
+        input[type="checkbox"] {
+          margin-right: 0.5rem; /* Margem direita de 0.5rem */
+        }
+      }
+
+      /* Estilos para itens de filtro */
+      .filtroItem {
+          margin-bottom: 1rem; /* Margem inferior de 1rem */
+      }
+      
+      /* Estilos para o container de filtros */
+      .filtroContainer {
+          display: flex; /* Aplica flexbox para o container de filtros */
+          flex-direction: column; /* Itens dispostos em coluna */
+          margin-left: 1rem; /* Margem esquerda de 1rem */
+      }
+    }
+}
+
+/* Estilos para a lista de agendamentos */
+.listClientes{
+  width: 700px; /* Largura de 700px */
+  display: flex; /* Aplica flexbox para a lista */
+  flex-direction: column; /* Itens dispostos em coluna */
+  margin: 10rem 2; /* Margens superior e inferior de 10rem, laterais de 2rem */
+  margin-top: 1rem; /* Margem superior de 1rem */
+  
+  
+}
+
+/* Estilos para elementos com classe "agendamento" */
+.clientes{
+  display: flex; /* Aplica flexbox para o agendamento */
+  width: 700px;
+  flex-direction: row; /* Itens dispostos em linha */
+  background-color: var(--white); /* Cor de fundo branca */
+  margin-bottom: 3rem; /* Margem inferior de 3rem */
+  align-items: center; /* Centraliza verticalmente */
+  border-radius: 0.3rem; /* Borda arredondada de 0.3rem */
+  border: 1px solid var(--gray-100); /* Borda sólida com cor específica */
+
+  /* Estilos para botões dentro do agendamento */
+  button{
+      border: 0; /* Sem borda */
+      background: transparent; /* Fundo transparente */
+      font-size: 1.2rem; /* Tamanho de fonte de 1.2rem */
+      color: var(--black); /* Cor do texto */
+      height: 40px; /* Altura de 40px */
+      align-items: center; /* Centraliza verticalmente */
+      display: flex; /* Aplica flexbox para o botão */
+  }
+}
+
+/* Estilos para a tag */
+.tag{
+  width: 9px; /* Largura de 9px */
+  background-color: var(--red-900); /* Cor de fundo vermelha */
+  height: 40px; /* Altura de 40px */
+  border-radius: 0.3rem 0 0 0.3rem; /* Borda arredondada específica */
+  margin-right: 1rem; /* Margem direita de 1rem */
 }

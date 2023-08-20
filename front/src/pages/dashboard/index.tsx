@@ -10,16 +10,19 @@ import Modal from "react-modal";
 import React from "react";
 import { Input } from "@/components/ui/Input";
 import { StatusAgendamentos } from "@/enum/StatusAgendamentos";
+import { toast } from "react-toastify";
+
 
 
 
 export type Agendamento = {
   id: string;
   data: string;
-  horario: string;
+  hora: string;
   status: StatusAgendamentos; 
   cliente: Cliente;
   servico: Servico;
+  veiculo: Veiculo;
 };
 
 export type Cliente = {
@@ -35,7 +38,8 @@ export type Veiculo = {
   marca: string;
   modelo: string;
   ano: string;
-  cliente_Id: string;
+  placa: string;
+  cliente_id: string;
 };
 
 export type Servico = {
@@ -73,6 +77,7 @@ export default function Dashboard() {
   const [busca, setBusca] = useState("");
   const [filtroData, setFiltroData] = useState("");
   const [filtroHorario, setFiltroHorario] = useState("");
+
   const apiClient = setupAPIClient();
 
   useEffect(() => {
@@ -108,7 +113,7 @@ export default function Dashboard() {
 
     const fetchAgendamento = async () => {
       const response = await apiClient
-        .get("/agendamentos/listar")
+        .get("/agendamentos/pendentes")
         .catch((err) => console.log(err));
       if (response) {
         const agendamento: Agendamento[] = response.data;
@@ -165,7 +170,7 @@ export default function Dashboard() {
 
     const dataCorresponde = agenda.data.includes(filtroData);
 
-    const horaCorresponde = agenda.horario.includes(filtroHorario);
+    const horaCorresponde = agenda.hora.includes(filtroHorario);
 
     const statusNaoConcluido = agenda.status !== StatusAgendamentos.CONCLUIDO;
 
@@ -181,11 +186,51 @@ export default function Dashboard() {
     try {
       const apiClient = setupAPIClient();
       await apiClient.post(`/agendamentos/${id}/concluir`);
-      const response = await apiClient.get("/agendamentos/listar");
+      const response = await apiClient.get("/agendamentos");
       const agendamento: Agendamento[] = response.data;
+      toast.success("Concluido com sucesso!");
+
       setAgendamentoList(agendamento);
     } catch (error) {
       console.error("Erro ao concluir o agendamento:", error);
+    }
+
+    setModalAberto(false);
+  };
+
+  const editar = async (id, dadosEditados) => {
+    try {
+      const apiClient = setupAPIClient();
+      
+      await apiClient.put(`/agendamentos/${id}`, dadosEditados); 
+  
+      const response = await apiClient.get("/agendamentos");
+      const agendamento: Agendamento[] = response.data;
+      toast.success("Editado com sucesso!");
+      console.log("Dados que serão enviados:", response);
+
+     
+      setAgendamentoList(agendamento);
+    } catch (error) {
+      console.error("Erro ao editar o agendamento:", error);
+    }
+  
+    setModalAberto(false);
+  };
+  
+
+  const deletar = async (id) => {
+    try {
+      const apiClient = setupAPIClient();
+      await apiClient.delete(`/agendamentos/${id}`);
+      const response = await apiClient.get("/agendamentos");
+      const agendamento: Agendamento[] = response.data;
+      
+      toast.error("Deletado com sucesso!");
+
+      setAgendamentoList(agendamento);
+    } catch (error) {
+      console.error("Erro ao deletar o agendamento:", error);
     }
 
     setModalAberto(false);
@@ -296,6 +341,9 @@ export default function Dashboard() {
             produto={produto}
             agendamentoId={agendamentoSelecionadoId}
             finalizarAgendamento={concluirAgendamento}
+            editar={editar}
+            deletar={deletar}
+
           />
         )}
       </div>
