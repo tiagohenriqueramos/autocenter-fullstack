@@ -12,7 +12,12 @@ Este é um sistema de auto center feito por mim.
 
 O principal objetivo desta API é facilitar e agilizar agendamentos e cadastros, otimizando a administração do tempo e permitindo que o mecanico foque no seu trabalho de forma adequada.
 
+# Sobre o projeto
 
+Este trabalho integra meu portfólio pessoal. Caso tenha considerações a compartilhar a respeito do projeto, do código ou de qualquer aspecto relevante, ficarei imensamente grato, uma vez que sua contribuição auxiliará na minha evolução como desenvolvedor.
 
+E-mail: tiagohenriqueramos@hotmail.com
+
+Conecte-se comigo no [LinkedIn](https://www.linkedin.com/in/tiagohenriqueramos)
 
 
