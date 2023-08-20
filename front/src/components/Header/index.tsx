@@ -39,7 +39,7 @@ export function Header() {
             <a>Produtos</a>
           </Link>
           <Link href="/finalizados" passHref legacyBehavior>
-            <a>Agendamentos Concluidos</a>
+            <a> Concluidos</a>
           </Link>
 
           <button onClick={signOut}>

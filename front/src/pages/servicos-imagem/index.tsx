@@ -14,10 +14,12 @@ import { toast } from "react-toastify";
 import { canSSRAuth } from "@/utils/canSSRAuth";
 import { FiUpload } from "react-icons/fi";
 
-type Servico = {
+type Cliente = {
   id: string;
-  descricaoServico: string;
-  maoDeObra: string;
+  nome: string;
+  cpf: string;
+  email: string;
+  telefone: string;
 };
 
 export default function ServicosImagem() {
@@ -27,19 +29,19 @@ export default function ServicosImagem() {
   const [avatarUrl, setAvatarUrl] = useState("");
   const [file, setFile] = useState(null);
 
-  const [servico, setServico] = useState<Servico[]>([]);
-  const [servicoSelecionado, setServicoSelecionado] = useState("");
+  const [cliente, setCliente] = useState<Cliente[]>([]);
+  const [clienteSelecionado, setClienteSelecionado] = useState("");
 
   const apiClient = setupAPIClient();
 
   const fetchServico = async () => {
     const response = await apiClient
-      .get("/servicos")
+      .get("/clientes")
       .catch((err) => console.log(err));
 
     if (response) {
-      const servico: Servico[] = response.data;
-      setServico(servico);
+      const cliente: Cliente[] = response.data;
+      setCliente(cliente);
     }
   };
 
@@ -47,9 +49,9 @@ export default function ServicosImagem() {
     fetchServico();
   }, []);
 
-  async function handleChangeServico(event) {
-    setServicoSelecionado(event.target.value);
-    console.log(servico[event.target.value]);
+  async function handleChangeCliente(event) {
+    setClienteSelecionado(event.target.value);
+    console.log(cliente[event.target.value]);
   }
 
   function handleFile(e: ChangeEvent<HTMLInputElement>) {
@@ -84,7 +86,7 @@ export default function ServicosImagem() {
       formData.append("file", file);
       formData.append("descricaoImagem", descricaoImagem);
       formData.append("nomeImagem", nomeImagem);
-      formData.append("servicoId",  servico[servicoSelecionado].id);
+      formData.append("cliente_id",  cliente[clienteSelecionado].id);
 
       await apiClient.post("/servicos/imagem", formData, {
         headers: {
@@ -102,7 +104,7 @@ export default function ServicosImagem() {
     // Limpar os campos
     setNomeImagem("");
     setDescricaoImagem("");
-    setServicoSelecionado("");
+    setClienteSelecionado("");
     setFile(null);
     setAvatarUrl("");
   };
@@ -118,14 +120,14 @@ export default function ServicosImagem() {
             <h1>Cadastrar Imagem do Serviço</h1>
 
             <form onSubmit={handleRegister}>
-              <select value={servicoSelecionado} onChange={handleChangeServico}>
+              <select value={clienteSelecionado} onChange={handleChangeCliente}>
               <option value="" disabled defaultValue="">
-                  Selecione um serviço
+                  Selecione um cliente
                 </option>
-                {servico.map((item, index) => {
+                {cliente.map((item, index) => {
                   return (
                     <option key={item.id} value={index}>
-                      {item.descricaoServico}
+                    Cliente:  {item.nome} CPF: {item.cpf}
                     </option>
                   );
                 })}

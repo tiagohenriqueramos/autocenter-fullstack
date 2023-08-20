@@ -254,7 +254,7 @@ export default function Agendamentos() {
 
               <select value={veiculoSelecionado} onChange={handleChangeVeiculo}>
                 <option value="" disabled defaultValue="">
-                  Selecione um Veiculo
+                  Selecione um veiculo
                 </option>
                 {veiculo.map((item, index) => {
                   return (

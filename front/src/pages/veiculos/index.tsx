@@ -47,7 +47,20 @@ export default function Veiculos() {
 
   const apiClient = setupAPIClient();
 
-  const fetchClientes = async () => {
+  const selecionarVeiculo = async (id: string) => {
+    try {
+      const response = await apiClient.get(`/veiculos/${id}`);
+      const veiculo: Veiculo = response.data;
+      setVeiculoSelecionado(veiculo);
+    } catch (error) {
+      console.log(error);
+    }
+
+    abrirModal();
+  };
+
+
+  const fetchCliente = async () => {
     const response = await apiClient
       .get("/clientes")
       .catch((err) => console.log(err));
@@ -59,10 +72,10 @@ export default function Veiculos() {
   };
 
   useEffect(() => {
-    fetchClientes();
+    fetchCliente();
   }, []);
 
-  const fetchVeiculos = async () => {
+  const fetchVeiculo = async () => {
     const response = await apiClient
       .get("/veiculos")
       .catch((err) => console.log(err));
@@ -74,7 +87,7 @@ export default function Veiculos() {
   };
 
   useEffect(() => {
-    fetchVeiculos();
+    fetchVeiculo();
   }, []);
 
   async function handleChangeClientes(event) {
@@ -88,8 +101,6 @@ export default function Veiculos() {
     if (marca === "" && modelo === "" && ano === "" && placa === "") {
       return;
     }
-
-    const apiClient = setupAPIClient();
 
     await apiClient.post("/veiculos", {
       marca: marca,
@@ -107,9 +118,11 @@ export default function Veiculos() {
     setAno("");
     setPlaca("");
     setClientesSelecionado("");
-
-
+    const response = await apiClient.get("/veiculos");
+    const veiculo: Veiculo[] = response.data;
     setVeiculo(veiculo);
+
+
   }
 
   const abrirModal = () => {
@@ -120,18 +133,7 @@ export default function Veiculos() {
     setModalAberto(false);
     setVeiculoSelecionado(null);
   };
-  const selecionarVeiculo = async (id: string) => {
-    try {
-      const response = await apiClient.get(`/veiculos/${id}`);
-      const veiculo: Veiculo = response.data;
-      setVeiculoSelecionado(veiculo);
-    } catch (error) {
-      console.log(error);
-    }
-
-    abrirModal();
-  };
-
+ 
   const editar = async (id, dadosEditados) => {
     try {
       const apiClient = setupAPIClient();

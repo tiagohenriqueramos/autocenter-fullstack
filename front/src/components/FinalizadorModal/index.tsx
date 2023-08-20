@@ -2,6 +2,8 @@ import Modal from "react-modal";
 import styles from "./styles.module.scss";
 import { FiX } from "react-icons/fi";
 import { setupAPIClient } from "@/services/api";
+import { toast } from "react-toastify";
+
 
 import {
   Agendamento,
@@ -68,7 +70,8 @@ export function FinalizadorModal({
       downloadLink.href = pdfUrl;
       downloadLink.download = agendamentoSelecionado.cliente.nome;
       downloadLink.click();
-  
+      toast.success("PDF gerado com sucesso!");
+
       // Limpa o URL temporário
       URL.revokeObjectURL(pdfUrl);
     } catch (error) {

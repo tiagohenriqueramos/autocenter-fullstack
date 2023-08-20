@@ -44,11 +44,11 @@ public class ServicoImagemController implements Serializable {
 	}
 
 	  @PostMapping(consumes = "multipart/form-data")
-	    public ResponseEntity<ServicoImagem> cadastrar(@RequestParam("file") MultipartFile file, @RequestParam("descricaoImagem") String descricaoImagem, @RequestParam("nomeImagem") String nomeImagem, @RequestParam("servicoId") Long servicoId) {
+	    public ResponseEntity<ServicoImagem> cadastrar(@RequestParam("file") MultipartFile file, @RequestParam("descricaoImagem") String descricaoImagem, @RequestParam("nomeImagem") String nomeImagem, @RequestParam("cliente_id") Long cliente_id) {
 	        ServicoImagem servicoImagem = new ServicoImagem();
 	        servicoImagem.setDescricaoImagem(descricaoImagem);
 	        servicoImagem.setNomeImagem(nomeImagem);
-	        servicoImagem.setServico_id(servicoId);
+	        servicoImagem.setCliente_id(cliente_id);
 	        
 	        servicoImagem = servicoImagensService.cadastrar(servicoImagem, file);
 	        

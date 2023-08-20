@@ -41,8 +41,8 @@ public class ServicoImagem {
     private byte[] arquivo;    
     
     @NonNull
-    @JoinColumn(name="servico_id")
-    private Long servico_id;
+    @JoinColumn(name="cliente_id")
+    private Long cliente_id;
     
     
 }

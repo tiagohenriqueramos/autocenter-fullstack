@@ -25,16 +25,17 @@ export default function Clientes() {
   const [email, setEmail] = useState("");
   const [cpf, setCpf] = useState("");
   const [telefone, setTelefone] = useState("");
+
   const [cliente, setCliente] = useState<Cliente[]>([]);
   const [clienteSelecionado, setClienteSelecionado] = useState<Cliente | null>(
     null
   );
 
   const [modalAberto, setModalAberto] = useState(false);
-
   const [busca, setBusca] = useState("");
 
   const apiClient = setupAPIClient();
+  
   const selecionarCliente = async (id: string) => {
     try {
       const response = await apiClient.get(`/clientes/${id}`);

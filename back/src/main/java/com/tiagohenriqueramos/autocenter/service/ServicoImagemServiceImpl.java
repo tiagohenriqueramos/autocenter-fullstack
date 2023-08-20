@@ -62,7 +62,7 @@ public class ServicoImagemServiceImpl implements ServicoImagemService {
 	            String base64Image = Base64.getEncoder().encodeToString(bytes);
 
 				//servicoImagem.setArquivo(bytes);
-                String nomeImagem = String.valueOf("# Id da Imagem é "+servicoImagem.getServico_id())+" #  "+ file.getOriginalFilename() +" # Descrição do imagem "+ servicoImagem.getNomeImagem() + "# "+ file.getOriginalFilename();
+                String nomeImagem = String.valueOf("# Id da Imagem é "+servicoImagem.getCliente_id())+" #  "+ file.getOriginalFilename() +" # Descrição do imagem "+ servicoImagem.getNomeImagem() + "# "+ file.getOriginalFilename();
 				Path caminho = Paths
 						.get("c:/imagens/" +nomeImagem );
 				Files.write(caminho, bytes);
