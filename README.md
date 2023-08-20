@@ -6,7 +6,7 @@ Este é um sistema de auto center feito por mim.
 
 É uma API RESTful construída com Java + Spring Boot + Postgres + ReactJs que ajuda os mecanicos a se organizarem e resguardarem de serviços prestados no dia a dia.
 
-[Back-end]([URL](https://github.com/tiagohenriqueramos/autocenter-fullstack/tree/main/back)
+[Back-end](https://github.com/tiagohenriqueramos/autocenter-fullstack/tree/main/back)
 
 [Front-end](https://github.com/tiagohenriqueramos/autocenter-fullstack/tree/main/front)
 
